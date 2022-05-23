@@ -20,17 +20,32 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     start() {
         this.isAlive = true;
 
-        this.scene.input.on('pointermove', (pointer: { x: number; y: number; }) => {
+        this.scene.input.on('pointermove', (pointer: Phaser.Input.Pointer ) => {
             if (this.isAlive) {
-                this.target.x = pointer.x;
-                this.target.y = pointer.y;
+                var vect = pointer.positionToCamera(this.scene.cameras.main) as Phaser.Math.Vector2;
+                this.target.x = vect.x;
+                this.target.y = vect.y;
+                // var mouseCoords = this.getMouseCoords();
+                // this.target.x = mouseCoords.mouseX;
+                // this.target.y = mouseCoords.mouseY;
 
+                // console.log("x1: " + pointer.x + " x2: " + this.x + "\ny1: " + pointer.y + " y2: " + this.y );
                 //  Add 90 degrees because the sprite is drawn facing up
                 // this.rotation = this.scene.physics.moveToObject(this, this.target, this.speed) + 1.5707963267948966;
                 this.rotation = this.scene.physics.moveTo(this, this.target.x, this.target.y, this.speed) - 1.5707963267948966;
             }
         });
     }
+
+    getMouseCoords() {
+        // Takes a Camera and updates this Pointer's worldX and worldY values so they are the result of a translation through the given Camera.
+        this.scene.input.activePointer.updateWorldPoint(this.scene.cameras.main);
+        const pointer = this.scene.input.activePointer;
+        return {
+          mouseX: pointer.worldX,
+          mouseY: pointer.worldY,
+        }
+      }
 
     kill() {
         this.isAlive = false;

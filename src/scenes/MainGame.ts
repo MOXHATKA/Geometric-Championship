@@ -6,7 +6,7 @@ import Shape from '../objects/Shape';
 
 export default class MainGame extends Phaser.Scene {
     player!: Player;
-    germs: any;
+    shapes: any;
     pickups: any;
     introText: any;
     scoreText: any;
@@ -17,7 +17,7 @@ export default class MainGame extends Phaser.Scene {
         super('MainGame');
 
         this.player;
-        this.germs;
+        this.shapes;
         this.pickups;
 
         this.introText;
@@ -32,18 +32,20 @@ export default class MainGame extends Phaser.Scene {
         this.highscore = this.registry.get('highscore');
         this.newHighscore = false;
 
-        let bg = this.add.image(window.innerWidth / 2, window.innerHeight / 2, 'background').setScale(100).setScrollFactor(0);
-        this.germs = new Shapes(this.physics.world, this);
+        let bg = this.add.image(window.innerWidth / 2, window.innerHeight / 2, 'background').setScale(100).setScrollFactor(0, 0);
+        this.shapes = new Shapes(this.physics.world, this);
 
         this.pickups = new Pickups(this.physics.world, this);
 
         this.player = new Player(this, 400, 400);
+        this.input.setPollAlways();
 
         // camera
-        // var camera = this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
-        // camera.startFollow(this.player );
-
-        this.scoreText = this.add.bitmapText(16, 32, 'slime', 'Score   0', 40).setDepth(1);
+        var camera = this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
+        // var camera = this.cameras.main.setBounds(0, 0, window.innerWidth, window.innerHeight);
+        camera.zoom = 2;
+        camera.startFollow(this.player );
+        this.scoreText = this.add.bitmapText(camera.scrollX, camera.scrollY, 'slime', 'Score   0', 40).setDepth(1);
 
         this.introText = this.add.bitmapText(window.innerWidth / 2, window.innerHeight / 2, 'slime', 'Avoid the Geometric Figures\nCollect the Rings', 60).setOrigin(0.5).setCenterAlign().setDepth(1);
 
@@ -52,7 +54,7 @@ export default class MainGame extends Phaser.Scene {
         this.input.once('pointerdown', () => {
 
             this.player.start();
-            this.germs.start();
+            this.shapes.start();
 
             // this.sound.play('start');
 
@@ -65,10 +67,10 @@ export default class MainGame extends Phaser.Scene {
         });
 
         this.physics.add.overlap(this.player, this.pickups, (player, pickup) => this.playerHitPickup(player, pickup));
-        this.physics.add.overlap(this.player, this.germs, (player, germ) => this.playerHitGerm(player, germ));
+        this.physics.add.overlap(this.player, this.shapes, (player, figure) => this.playerHitShape(player, figure));
     }
 
-    playerHitGerm(player: Phaser.Types.Physics.Arcade.GameObjectWithBody, germ: Phaser.Types.Physics.Arcade.GameObjectWithBody) {
+    playerHitShape(player: Phaser.Types.Physics.Arcade.GameObjectWithBody, germ: Phaser.Types.Physics.Arcade.GameObjectWithBody) {
         //  We don't count a hit if the germ is fading in or out
         if ((player as Player).isAlive && (germ as Shape).alpha === 1) {
             this.gameOver();
@@ -98,7 +100,7 @@ export default class MainGame extends Phaser.Scene {
 
     gameOver() {
         this.player.kill();
-        this.germs.stop();
+        this.shapes.stop();
 
         // this.sound.stopAll();
         // this.sound.play('fail');

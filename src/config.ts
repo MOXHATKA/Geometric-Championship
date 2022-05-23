@@ -14,7 +14,7 @@ export default {
     scene: [Boot, Preloader, MainMenu, MainGame], //Boot, Preloader, MainMenu, MainGame
     physics: {
         default: 'arcade',
-        arcade: { debug: false },
+        arcade: { debug: true },
     },
     pixelArt: true
 }

@@ -45,6 +45,7 @@ export default class Preloader extends Phaser.Scene {
             textureURL: 'ring.png',
             atlasURL: 'ring.json'
         }); 
+
         // this.load.aseprite({
         //     key: 'figures',
         //     textureURL: 'Figures.png',
