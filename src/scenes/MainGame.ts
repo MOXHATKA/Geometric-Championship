@@ -41,8 +41,8 @@ export default class MainGame extends Phaser.Scene {
         this.input.setPollAlways();
 
         // camera
-        var camera = this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
-        // var camera = this.cameras.main.setBounds(0, 0, window.innerWidth, window.innerHeight);
+        // var camera = this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
+        var camera = this.cameras.main.setBounds(0, 0, window.innerWidth, window.innerHeight);
         camera.zoom = 2;
         camera.startFollow(this.player );
         this.scoreText = this.add.bitmapText(camera.scrollX, camera.scrollY, 'slime', 'Score   0', 40).setDepth(1);
