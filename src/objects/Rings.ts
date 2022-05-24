@@ -23,13 +23,11 @@ export default class Rings extends Phaser.Physics.Arcade.Group
         this.create(Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'ring');
         this.create(Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'ring');
         this.create(Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'ring');
-
-        
     }
 
     collect (rings: { body: { reset: (arg0: any, arg1: any) => void; }; })
     {
-        //  Move the pick-up to a new location
+        //  Move the ring to a new location
 
         this.outer.getRandomPoint(this.target);
 

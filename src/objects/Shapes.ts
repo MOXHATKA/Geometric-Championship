@@ -1,4 +1,4 @@
-import Figure from './Shape';
+import Shape from './Shape';
 
 export default class Shapes extends Phaser.Physics.Arcade.Group
 {
@@ -8,7 +8,7 @@ export default class Shapes extends Phaser.Physics.Arcade.Group
     {
         super(world, scene);
 
-        this.classType = Figure;
+        this.classType = Shape;
 
         this.shapeConfig = [
             { animation: 'circle', speed: 60 },
@@ -23,17 +23,17 @@ export default class Shapes extends Phaser.Physics.Arcade.Group
         const height = window.innerHeight;
         const width = window.innerWidth;
 
-        let figure1 = new Figure(this.scene, Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'circle', 5);
-        let figure2 = new Figure(this.scene, Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'rectangle', 5);
-        let figure3 = new Figure(this.scene, Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'rect', 5);
+        let shape1 = new Shape(this.scene, Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'circle', 5);
+        let shape2 = new Shape(this.scene, Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'rectangle', 5);
+        let shape3 = new Shape(this.scene, Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'rect', 5);
 
-        this.add(figure1, true);
-        this.add(figure2, true);
-        this.add(figure3, true);
+        this.add(shape1, true);
+        this.add(shape2, true);
+        this.add(shape3, true);
 
-        figure1.start(1000);
-        figure2.start(2000);
-        figure3.start(3000);
+        shape1.start(1000);
+        shape2.start(2000);
+        shape3.start(3000);
 
         this.timedEvent = this.scene.time.addEvent({ delay: 2000, callback: this.releaseShape, callbackScope: this, loop: true });
     }
@@ -56,7 +56,7 @@ export default class Shapes extends Phaser.Physics.Arcade.Group
 
 
         let config = Phaser.Math.RND.pick(this.shapeConfig);
-        let shape : Figure | undefined;
+        let shape : Shape | undefined;
 
         this.getChildren().forEach((child: any) => {
 
@@ -73,7 +73,7 @@ export default class Shapes extends Phaser.Physics.Arcade.Group
         }
         else
         {
-            shape = new Figure(this.scene, x, y, config.animation, config.speed);
+            shape = new Shape(this.scene, x, y, config.animation, config.speed);
 
             this.add(shape, true);
 

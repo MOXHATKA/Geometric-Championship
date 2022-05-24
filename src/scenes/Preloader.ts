@@ -5,7 +5,7 @@ export default class Preloader extends Phaser.Scene {
     }
 
     preload() {
-        this.add.image(0, 0, 'background'); //setSize(window.innerHeight, window.innerWidth);
+        this.add.image(0, 0, 'background');
 
         this.loadText = this.add.bitmapText(window.innerWidth / 2, window.innerHeight / 2, 'slime', 'Loading ...', 80).setOrigin(0.5);
 
@@ -46,14 +46,8 @@ export default class Preloader extends Phaser.Scene {
             atlasURL: 'ring.json'
         }); 
 
-        // this.load.aseprite({
-        //     key: 'figures',
-        //     textureURL: 'Figures.png',
-        //     atlasURL: 'Figures.json'
-        // });
-        // //  Audio ...
-        // this.load.setPath('assets/games/germs/sounds/');
-
+        //  Audio ...
+        // this.load.setPath('assets/sounds/');
         // this.load.audio('appear', ['appear.ogg', 'appear.m4a', 'appear.mp3']);
         // this.load.audio('fail', ['fail.ogg', 'fail.m4a', 'fail.mp3']);
         // this.load.audio('laugh', ['laugh.ogg', 'laugh.m4a', 'laugh.mp3']);
@@ -65,9 +59,6 @@ export default class Preloader extends Phaser.Scene {
 
     create() {
         //  Create our global animations
-        // this.anims.createFromAseprite('circle');
-        // this.anims.createFromAseprite('figures');
-
         this.anims.create({
             key: 'circle',
             frames: this.anims.generateFrameNames('circle'),
@@ -104,24 +95,6 @@ export default class Preloader extends Phaser.Scene {
             frameRate: 8,
             repeat: -1
         });
-        // this.anims.create({
-        //     key: 'figure2',
-        //     frames: this.anims.generateFrameNames('figures'),
-        //     frameRate: 8,
-        //     repeat: -1
-        // });
-
-        // if (this.sound.locked) {
-        //     this.loadText.setText('Click to Start');
-
-        //     this.input.once('pointerdown', () => {
-
-        //         this.scene.start('MainMenu');
-
-        //     });
-        // } else {
-        //     this.scene.start('MainMenu');
-        // }
 
         this.scene.start('MainMenu');
 

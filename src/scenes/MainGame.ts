@@ -6,10 +6,9 @@ import eventsCenter from '../events/EventsCenter';
 
 export default class MainGame extends Phaser.Scene {
     player!: Player;
-    shapes: any;
-    rings: any;
-    introText: any;
-    scoreText: any;
+    shapes!: Shapes;
+    rings!: Rings;
+
     score: number;
     highscore: number;
     newHighscore: boolean;
@@ -20,8 +19,6 @@ export default class MainGame extends Phaser.Scene {
         this.shapes;
         this.rings;
 
-        this.introText;
-        this.scoreText;
         this.score = 0;
         this.highscore = 0;
         this.newHighscore = false;
@@ -35,19 +32,16 @@ export default class MainGame extends Phaser.Scene {
         this.highscore = this.registry.get('highscore');
         this.newHighscore = false;
 
-        this.add.image(0,0, 'background').setScale(100).setScrollFactor(0, 0);
+        this.add.image(window.innerWidth / 2, window.innerHeight / 2, 'background');
+
         this.shapes = new Shapes(this.physics.world, this);
-
-
-        this.player = new Player(this, 400, 400);
-        this.input.setPollAlways();
-
+        this.player = new Player(this, window.innerWidth / 2, window.innerHeight / 2);
+        
         // camera
         var camera = this.cameras.main.setBounds(0, 0, window.innerWidth, window.innerHeight);
         camera.zoom = 2;
-        camera.startFollow(this.player );
 
-        // 
+        // rings
         this.rings = new Rings(this.physics.world, this);
         this.rings.start();
         this.rings.playAnimation('ring');
@@ -55,15 +49,11 @@ export default class MainGame extends Phaser.Scene {
         this.input.once('pointerdown', () => {
 
             this.player.start();
+            this.player.anims.play({ key: 'player', repeat: -1 })
+
             this.shapes.start();
-
+            camera.startFollow(this.player);
             // this.sound.play('start');
-
-            this.tweens.add({
-                targets: this.introText,
-                alpha: 0,
-                duration: 300
-            });
         });
 
         this.physics.add.overlap(this.player, this.rings, (player, ring) => this.playerHitPickup(player, ring));
@@ -108,7 +98,7 @@ export default class MainGame extends Phaser.Scene {
             this.registry.set('highscore', this.score);
         }
 
-		this.input.once('pointerdown', () => {
+        this.input.once('pointerdown', () => {
             this.scene.start('MainMenu');
         });
     }

@@ -11,7 +11,6 @@ export default class UIScene extends Phaser.Scene
 
 	create()
 	{
-        console.log("UIscene");
 		this.scoreText = this.add.bitmapText(32,32, 'slime', 'Score   0', 40).setDepth(1).setScrollFactor(0);
         this.introText = this.add.bitmapText(window.innerWidth / 2, window.innerHeight / 2, 'slime', 'Avoid the Geometric Figures\nCollect the Rings', 60).setOrigin(0.5).setCenterAlign().setDepth(1);
 
@@ -30,8 +29,6 @@ export default class UIScene extends Phaser.Scene
 		})
 
         this.input.once('pointerdown', () => {
-            // this.sound.play('start');
-
             this.tweens.add({
                 targets: this.introText,
                 alpha: 0,
@@ -60,7 +57,6 @@ export default class UIScene extends Phaser.Scene
 
 	updateCount(count: number)
 	{
-        console.log("UIscene update");
         this.scoreText.setText('Score   ' + count);
 	}
 	

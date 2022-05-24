@@ -2,12 +2,12 @@ import MainGame from "../scenes/MainGame";
 
 export default class Shape extends Phaser.Physics.Arcade.Sprite
 {
-    speed: any;
+    speed: number;
     lifespan: number;
     isChasing: boolean;
     target: Phaser.Math.Vector2;
     scene: MainGame;
-    constructor (scene: any, x: number, y: number, animation: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig, speed: any)
+    constructor (scene: any, x: number, y: number, animation: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig, speed: number)
     {
         super(scene, x, y, 'circle');
 

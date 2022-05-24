@@ -10,7 +10,7 @@ export default class MainMenu extends Phaser.Scene
         // this.music = this.sound.play('music', { loop: true });
         // this.sound.play('laugh');
 
-        this.add.image(window.innerWidth / 2, window.innerHeight / 2, 'background').setScale(100);
+        this.add.image(window.innerWidth / 2, window.innerHeight / 2, 'background');
 
         const area = new Phaser.Geom.Rectangle(0, 0, window.innerWidth, window.innerHeight);
 
@@ -19,7 +19,7 @@ export default class MainMenu extends Phaser.Scene
         this.addShape(area, 'rect');
         this.addShape(area, 'triangle');
 
-        this.add.shader('goo', window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight);
+        // this.add.shader('goo', window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight);
 
         this.add.bitmapText(window.innerWidth / 2, (window.innerHeight / 2), 'slime', 'Geometric Championship', 100).setOrigin(0.5);
 
