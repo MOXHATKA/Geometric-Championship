@@ -1,16 +1,16 @@
-import Figure from './Shape';
+import Shape from './Shape';
 
 export default class Shapes extends Phaser.Physics.Arcade.Group
 {
-    germConfig: { animation: string; speed: number; }[];
+    shapeConfig: { animation: string; speed: number; }[];
     timedEvent: Phaser.Time.TimerEvent | undefined;
     constructor (world: Phaser.Physics.Arcade.World, scene: Phaser.Scene)
     {
         super(world, scene);
 
-        this.classType = Figure;
+        this.classType = Shape;
 
-        this.germConfig = [
+        this.shapeConfig = [
             { animation: 'circle', speed: 60 },
             { animation: 'rectangle', speed: 90 },
             { animation: 'rect', speed: 120 },
@@ -22,22 +22,20 @@ export default class Shapes extends Phaser.Physics.Arcade.Group
     {
         const height = window.innerHeight;
         const width = window.innerWidth;
-        const rndHeight = Phaser.Math.RND.between(10, height);
-        const rndWidth = Phaser.Math.RND.between(10, width);
 
-        let figure1 = new Figure(this.scene, Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'circle', 5);
-        let figure2 = new Figure(this.scene, Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'rectangle', 5);
-        let figure3 = new Figure(this.scene, Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'rect', 5);
+        let shape1 = new Shape(this.scene, Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'circle', 5);
+        let shape2 = new Shape(this.scene, Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'rectangle', 5);
+        let shape3 = new Shape(this.scene, Phaser.Math.RND.between(10, width), Phaser.Math.RND.between(10, height), 'rect', 5);
 
-        this.add(figure1, true);
-        this.add(figure2, true);
-        this.add(figure3, true);
+        this.add(shape1, true);
+        this.add(shape2, true);
+        this.add(shape3, true);
 
-        figure1.start(1000);
-        figure2.start(2000);
-        figure3.start(3000);
+        shape1.start(1000);
+        shape2.start(2000);
+        shape3.start(3000);
 
-        this.timedEvent = this.scene.time.addEvent({ delay: 2000, callback: this.releaseGerm, callbackScope: this, loop: true });
+        this.timedEvent = this.scene.time.addEvent({ delay: 2000, callback: this.releaseShape, callbackScope: this, loop: true });
     }
 
     stop ()
@@ -51,36 +49,35 @@ export default class Shapes extends Phaser.Physics.Arcade.Group
         });
     }
 
-    releaseGerm ()
+    releaseShape ()
     {
         const x = Phaser.Math.RND.between(0, window.innerWidth);
         const y = Phaser.Math.RND.between(0, window.innerHeight);
 
 
-        let config = Phaser.Math.RND.pick(this.germConfig);
-        let germ : Figure | undefined;// = new Germ(this.scene, x, y, config.animation, config.speed);
+        let config = Phaser.Math.RND.pick(this.shapeConfig);
+        let shape : Shape | undefined;
 
         this.getChildren().forEach((child: any) => {
 
             if (child.anims.getName() === config.animation && !child.active)
             {
-                //  We found a dead matching germ, so resurrect it
-                germ = child;
+                shape = child;
             }
 
         });
 
-        if (germ)
+        if (shape)
         {
-            germ.restart(x, y);
+            shape.restart(x, y);
         }
         else
         {
-            germ = new Figure(this.scene, x, y, config.animation, config.speed);
+            shape = new Shape(this.scene, x, y, config.animation, config.speed);
 
-            this.add(germ, true);
+            this.add(shape, true);
 
-            germ.start();
+            shape.start();
         }
     }
 }

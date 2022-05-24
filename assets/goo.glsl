@@ -26,7 +26,7 @@ float GooFunc(vec2 uv, float zoom, float distortion, float gooeyness, float wibb
 void mainImage(out vec4 k, vec2 p) {
     vec2 uv = p.xy / resolution.xy;
 
-    float distortion = 5.0; // increase or decrease to suit your taste.
+    float distortion = 4.0; // increase or decrease to suit your taste.
     float zoom = 0.6; // zoom value
     float gooeyness = 0.90; // smaller = more gooey bits
     float wibble = 0.5; // tweak the wibble!
