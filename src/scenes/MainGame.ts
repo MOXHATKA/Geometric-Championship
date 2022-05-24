@@ -1,13 +1,13 @@
-// import Germs from './Germs';
 import Player from '../objects/Player';
-import Pickups from '../objects/Pickups';
+import Rings from '../objects/Rings';
 import Shapes from '../objects/Shapes';
 import Shape from '../objects/Shape';
+import eventsCenter from '../events/EventsCenter';
 
 export default class MainGame extends Phaser.Scene {
     player!: Player;
     shapes: any;
-    pickups: any;
+    rings: any;
     introText: any;
     scoreText: any;
     score: number;
@@ -18,7 +18,7 @@ export default class MainGame extends Phaser.Scene {
 
         this.player;
         this.shapes;
-        this.pickups;
+        this.rings;
 
         this.introText;
         this.scoreText;
@@ -28,28 +28,29 @@ export default class MainGame extends Phaser.Scene {
     }
 
     create() {
+        this.scene.run('ui-scene');
+
         this.score = 0;
+
         this.highscore = this.registry.get('highscore');
         this.newHighscore = false;
 
-        let bg = this.add.image(window.innerWidth / 2, window.innerHeight / 2, 'background').setScale(100).setScrollFactor(0, 0);
+        this.add.image(0,0, 'background').setScale(100).setScrollFactor(0, 0);
         this.shapes = new Shapes(this.physics.world, this);
 
-        this.pickups = new Pickups(this.physics.world, this);
 
         this.player = new Player(this, 400, 400);
         this.input.setPollAlways();
 
         // camera
-        // var camera = this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight);
         var camera = this.cameras.main.setBounds(0, 0, window.innerWidth, window.innerHeight);
         camera.zoom = 2;
         camera.startFollow(this.player );
-        this.scoreText = this.add.bitmapText(camera.scrollX, camera.scrollY, 'slime', 'Score   0', 40).setDepth(1);
 
-        this.introText = this.add.bitmapText(window.innerWidth / 2, window.innerHeight / 2, 'slime', 'Avoid the Geometric Figures\nCollect the Rings', 60).setOrigin(0.5).setCenterAlign().setDepth(1);
-
-        this.pickups.start();
+        // 
+        this.rings = new Rings(this.physics.world, this);
+        this.rings.start();
+        this.rings.playAnimation('ring');
 
         this.input.once('pointerdown', () => {
 
@@ -63,25 +64,22 @@ export default class MainGame extends Phaser.Scene {
                 alpha: 0,
                 duration: 300
             });
-
         });
 
-        this.physics.add.overlap(this.player, this.pickups, (player, pickup) => this.playerHitPickup(player, pickup));
+        this.physics.add.overlap(this.player, this.rings, (player, ring) => this.playerHitPickup(player, ring));
         this.physics.add.overlap(this.player, this.shapes, (player, figure) => this.playerHitShape(player, figure));
     }
 
     playerHitShape(player: Phaser.Types.Physics.Arcade.GameObjectWithBody, germ: Phaser.Types.Physics.Arcade.GameObjectWithBody) {
-        //  We don't count a hit if the germ is fading in or out
         if ((player as Player).isAlive && (germ as Shape).alpha === 1) {
             this.gameOver();
         }
     }
 
-    playerHitPickup(player: Phaser.Types.Physics.Arcade.GameObjectWithBody, pickup: Phaser.Types.Physics.Arcade.GameObjectWithBody) {
+    playerHitPickup(player: Phaser.Types.Physics.Arcade.GameObjectWithBody, ring: Phaser.Types.Physics.Arcade.GameObjectWithBody) {
         this.score++;
 
-        this.scoreText.setText('Score   ' + this.score);
-
+        eventsCenter.emit('update-count', this.score);
         // if (!this.newHighscore && this.score > this.highscore) {
         //     if (this.highscore > 0) {
         //         //  Only play the victory sound if they actually set a new highscore
@@ -95,7 +93,7 @@ export default class MainGame extends Phaser.Scene {
         //     this.sound.play('pickup');
         // }
 
-        this.pickups.collect(pickup);
+        this.rings.collect(ring);
     }
 
     gameOver() {
@@ -104,20 +102,13 @@ export default class MainGame extends Phaser.Scene {
 
         // this.sound.stopAll();
         // this.sound.play('fail');
-
-        this.introText.setText('Game Over!');
-
-        this.tweens.add({
-            targets: this.introText,
-            alpha: 1,
-            duration: 300
-        });
+        eventsCenter.emit('game-over', this.score);
 
         if (this.newHighscore) {
             this.registry.set('highscore', this.score);
         }
 
-        this.input.once('pointerdown', () => {
+		this.input.once('pointerdown', () => {
             this.scene.start('MainMenu');
         });
     }
