@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Socket.io TESTE</title>
+    </head>
+    <body>
+        <h1>TESTE</h1>
+        <script
+            src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+            integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            const socket = io("http://localhost:5000/");
+
+            // socket.on("connection", (s) => {
+            //     console.log("connect");
+            //     s.join("room1");
+            // });
+            socket.on("noArg", () => {
+                console.log("noArh");
+            });
+
+            socket.on("basicEmit", (a, b, c) => {
+                console.log(a, b, c);
+            });
+
+            socket.on("withAck", (d, callback) => {
+                console.log(d);
+                callback();
+            });
+        </script>
+    </body>
+</html>
