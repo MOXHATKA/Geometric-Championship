@@ -18,14 +18,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     start() {
         this.isAlive = true;
-        this.scene.input.on('pointermove', (pointer: Phaser.Input.Pointer ) => {
-            if (this.isAlive) {
-                var vect = pointer.positionToCamera(this.scene.cameras.main) as Phaser.Math.Vector2;
-                this.target.x = vect.x;
-                this.target.y = vect.y;
-                this.rotation = this.scene.physics.moveTo(this, this.target.x, this.target.y, this.speed) - 1.5707963267948966;
-            }
-        });
+        // this.scene.input.on('pointermove', (pointer: Phaser.Input.Pointer ) => {
+        //     console.debug("move");
+        //     if (this.isAlive) {
+        //         var vect = pointer.positionToCamera(this.scene.cameras.main) as Phaser.Math.Vector2;
+        //         this.target.x = vect.x;
+        //         this.target.y = vect.y;
+        //         this.rotation = this.scene.physics.moveTo(this, this.target.x, this.target.y, this.speed) - 1.5707963267948966;
+        //     }
+        // });
     }
 
     kill() {
