@@ -12,8 +12,12 @@ export default class UIScene extends Phaser.Scene
 	create()
 	{
 		this.scoreText = this.add.bitmapText(32,32, 'slime', 'Score   0', 40).setDepth(1).setScrollFactor(0);
-        this.introText = this.add.bitmapText(window.innerWidth / 2, window.innerHeight / 2, 'slime', 'Avoid the Geometric Figures\nCollect the Rings', 60).setOrigin(0.5).setCenterAlign().setDepth(1);
-
+        this.introText = this.add.bitmapText(window.innerWidth / 2, window.innerHeight / 2, 'slime', 'Wierd Survivors', 60).setOrigin(0.5).setCenterAlign().setDepth(1);
+		this.tweens.add({
+			targets: this.introText,
+			alpha: 0,
+			duration: 1000
+		});
 	
 		// listen to 'update-count' event and call `updateCount()`
 		// when it fires
@@ -27,14 +31,6 @@ export default class UIScene extends Phaser.Scene
 		this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
 			eventsCenter.off('game-over', this.gameOver, this)
 		})
-
-        this.input.once('pointerdown', () => {
-            this.tweens.add({
-                targets: this.introText,
-                alpha: 0,
-                duration: 300
-            });
-        });
 	}
 
 	gameOver(){

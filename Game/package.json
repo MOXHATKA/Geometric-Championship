@@ -19,6 +19,6 @@
     },
     "dependencies": {
         "colyseus.js": "^0.14.13",
-        "bitecs": "^0.3.38"
+        "wolf-ecs": "^2.1.3"
     }
 }
