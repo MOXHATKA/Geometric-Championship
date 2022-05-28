@@ -34,11 +34,7 @@ export default class Preloader extends Phaser.Scene {
             atlasURL: 'triangle.json'
         });
 
-        this.load.aseprite({
-            key: 'player',
-            textureURL: 'player.png',
-            atlasURL: 'player.json'
-        }); 
+
         
         this.load.aseprite({
             key: 'ring',
@@ -46,6 +42,12 @@ export default class Preloader extends Phaser.Scene {
             atlasURL: 'ring.json'
         }); 
 
+        this.load.setPath('/assets/characters/Zoya/');
+        this.load.aseprite({
+            key: 'zoya',
+            textureURL: 'zoya.png',
+            atlasURL: 'zoya.json'
+        }); 
         //  Audio ...
         // this.load.setPath('assets/sounds/');
         // this.load.audio('appear', ['appear.ogg', 'appear.m4a', 'appear.mp3']);
@@ -83,18 +85,20 @@ export default class Preloader extends Phaser.Scene {
             frameRate: 8,
             repeat: -1
         });
-        this.anims.create({
-            key: 'player',
-            frames: this.anims.generateFrameNames('player'),
-            frameRate: 8,
-            repeat: -1
-        });
+        // this.anims.create({
+        //     key: 'zoya',
+        //     frames: this.anims.generateFrameNames('zoya'),
+        //     frameRate: 8,
+        //     repeat: -1
+        // });
         this.anims.create({
             key: 'ring',
             frames: this.anims.generateFrameNames('ring'),
             frameRate: 8,
             repeat: -1
         });
+
+        this.anims.createFromAseprite('zoya');
 
         this.scene.start('MainMenu');
 

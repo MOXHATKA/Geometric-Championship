@@ -49,11 +49,10 @@ export default class MainGame extends Phaser.Scene {
         this.input.once('pointerdown', () => {
 
             this.player.start();
-            this.player.anims.play({ key: 'player', repeat: -1 })
+            // this.player.anims.play({ key: 'zoya', repeat: -1 })
 
             this.shapes.start();
             camera.startFollow(this.player);
-            // this.sound.play('start');
         });
 
         this.physics.add.overlap(this.player, this.rings, (player, ring) => this.playerHitPickup(player, ring));
@@ -67,21 +66,10 @@ export default class MainGame extends Phaser.Scene {
     }
 
     playerHitPickup(player: Phaser.Types.Physics.Arcade.GameObjectWithBody, ring: Phaser.Types.Physics.Arcade.GameObjectWithBody) {
+        // this.cameras.main.shake(5000);
         this.score++;
 
         eventsCenter.emit('update-count', this.score);
-        // if (!this.newHighscore && this.score > this.highscore) {
-        //     if (this.highscore > 0) {
-        //         //  Only play the victory sound if they actually set a new highscore
-        //         this.sound.play('victory');
-        //     } else {
-        //         this.sound.play('pickup');
-        //     }
-
-        //     this.newHighscore = true;
-        // } else {
-        //     this.sound.play('pickup');
-        // }
 
         this.rings.collect(ring);
     }
@@ -90,8 +78,6 @@ export default class MainGame extends Phaser.Scene {
         this.player.kill();
         this.shapes.stop();
 
-        // this.sound.stopAll();
-        // this.sound.play('fail');
         eventsCenter.emit('game-over', this.score);
 
         if (this.newHighscore) {
