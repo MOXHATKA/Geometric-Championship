@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { WebSocketPlagin } from './plagins/websocket';
+import { WebSocketPlugin } from './plagins/websocket';
 import Boot from './scenes/Boot';
 import Game from './scenes/Game';
 import UIScene from './scenes/UIScene';
@@ -11,11 +11,11 @@ var config: Phaser.Types.Core.GameConfig = {
     backgroundColor: '#000000',
     parent: 'phaser-example',
     scene: [Boot, Game, UIScene], // [Boot, Preloader, MainMenu, MainGame, UIScene],
-    // plugins: {
-    //     global: [
-    //         { key: 'WebSocketPlagin', plugin: WebSocketPlagin, start:true }
-    //     ]
-    // },
+    plugins: {
+        global: [
+            { key: 'WebSocketPlugin', plugin: WebSocketPlugin, start:true }
+        ]
+    },
     physics: {
         default: 'arcade',
         arcade: { debug: true },
