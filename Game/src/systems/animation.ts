@@ -22,12 +22,12 @@ export default function animationSystem(scene: Phaser.Scene): void {
         //     sprite.play({ key: State[State.Run], repeat: -1 }, true);
         // }
 
-        if (sprite.body.speed == 0 && sprite instanceof Player) {
-            sprite.anims.play({ key: name + '_Idle', repeat: -1 }, true);
-        }
-        else if (sprite.body.speed > 0) {
-            sprite.play({ key: name + '_Run', repeat: -1 }, true);
-        }
+        // if (sprite.body.speed == 0 && sprite instanceof Player) {
+        //     sprite.anims.play({ key: name + '_Idle', repeat: -1 }, true);
+        // }
+        // else if (sprite.body.speed > 0) {
+        //     sprite.play({ key: name + '_Run', repeat: -1 }, true);
+        // }
 
         if (sprite.body.velocity.x < 0)
             sprite.setFlipX(true);

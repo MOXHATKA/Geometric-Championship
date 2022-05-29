@@ -17,8 +17,8 @@ var config: Phaser.Types.Core.GameConfig = {
     //     ]
     // },
     physics: {
-        default: 'arcade',
-        arcade: { debug: true },
+        default: 'matter',
+        matter: { debug: true },
     },
     scale: {
         mode: Phaser.Scale.RESIZE,

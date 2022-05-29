@@ -23,6 +23,8 @@ export default class Game extends Phaser.Scene {
 	}
 
 	create() {
+		this.matter.world.disableGravity();
+		this.matter.world.setBounds();
         this.scene.run('ui-scene');
 		this.bg = this.add.tileSprite(0, 0, this.scale.width, this.scale.height, 'background').setOrigin(0);
 		this.scale.on('resize', this.resize, this);
@@ -61,16 +63,16 @@ export default class Game extends Phaser.Scene {
 			ecs.addComponent(enemy, StateAnimation);
 
 		}
-		// this.enemy = ecs.createEntity();
+		// // this.enemy = ecs.createEntity();
 
-		// const target = Target;
-		// target.sprite[this.enemy] = sprite.sprite[this.player];
-		// sprite.sprite[this.enemy] = new Enemy(this, 500, 500, 'Bat');
+		// // const target = Target;
+		// // target.sprite[this.enemy] = sprite.sprite[this.player];
+		// // sprite.sprite[this.enemy] = new Enemy(this, 500, 500, 'Bat');
 		
-		// ecs.addComponent(this.enemy, EnemyTag);
-		// ecs.addComponent(this.enemy, Sprite);
-		// ecs.addComponent(this.enemy, target);
-		// ecs.addComponent(this.enemy, StateAnimation);
+		// // ecs.addComponent(this.enemy, EnemyTag);
+		// // ecs.addComponent(this.enemy, Sprite);
+		// // ecs.addComponent(this.enemy, target);
+		// // ecs.addComponent(this.enemy, StateAnimation);
 
 		var camera = this.cameras.main.setBounds(0, 0, window.innerWidth, window.innerHeight);
         camera.zoom = 2;

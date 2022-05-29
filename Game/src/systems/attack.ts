@@ -12,11 +12,11 @@ export default function flowSystem(scene: Phaser.Scene): void {
 
 	movementQuery.forEach(id => {
 		const sprite = Sprite.sprite[id];
-		if (sprite.body.speed > 0) {
-			if (Phaser.Math.Distance.Between(sprite.x, sprite.y, Target.sprite[id].x, Target.sprite[id].y,) < 6) {
-				sprite.body.reset(sprite.x, sprite.y);
-			}
-		}
+		// if (sprite.body.speed > 0) {
+		// 	if (Phaser.Math.Distance.Between(sprite.x, sprite.y, Target.sprite[id].x, Target.sprite[id].y,) < 6) {
+		// 		sprite.body.reset(sprite.x, sprite.y);
+		// 	}
+		// }
 		if (Phaser.Math.Distance.Between(sprite.x, sprite.y, Target.sprite[id].x, Target.sprite[id].y) >= 6 ) 
 
 			scene.physics.moveTo(Sprite.sprite[id], Target.sprite[id].x, Target.sprite[id].y, 200)
