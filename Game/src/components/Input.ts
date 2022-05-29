@@ -2,8 +2,8 @@ import { types } from 'wolf-ecs'
 import ecs from '../ECSInstance'
 
 const Input = ecs.defineComponent({
-	x: types.int,
-	y:  types.int,
+	x: types.f32,
+	y:  types.f32,
 	speed: types.int
 })
 
