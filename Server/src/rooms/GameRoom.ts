@@ -8,6 +8,7 @@ export class GameRoom extends Room<State> {
             const player = this.state.players.get(client.sessionId);
             player.x = message.x;
             player.y = message.y;
+            this.state.players.set(client.sessionId, player);
             this.broadcast(
                 "updatePosition",
                 {
@@ -21,22 +22,25 @@ export class GameRoom extends Room<State> {
     }
 
     onJoin(client: Client, options: any) {
-        console.debug(options);
-        this.state.players.set(client.sessionId, new Player());
+        var player = new Player();
+        player.x = options.x;
+        player.y = options.y;
+        this.state.players.set(client.sessionId, player);
         this.broadcast(
             "joinPlayer",
-            { id: client.sessionId },
+            { id: client.sessionId, x: options.x, y: options.y },
             { except: client }
         );
         var players: any[] = [];
         this.state.players.forEach((elemet, key) => {
             if (key == client.sessionId) return;
-            players.push({ key: key, x: elemet.x, y: elemet.y });
+            players.push({ id: key, x: elemet.x, y: elemet.y });
         });
         client.send("updatePlayers", { players: players });
     }
 
     onLeave(client: Client, consented: boolean) {
+        this.state.players.delete(client.sessionId);
         console.log(client.sessionId, "left!");
     }
 

@@ -2,15 +2,17 @@ import Phaser from "phaser";
 import ecs from "../ECSInstance";
 
 import Sprite from "../components/Sprite";
-import { any } from "wolf-ecs";
+import { any, not } from "wolf-ecs";
 import Input from "../components/Input";
 import PlayerNetTag from "../components/PlayerNetTag";
+import PlayerTag from "../components/PlayerTag";
 
 export default function playerNetMovementSystem(scene: Phaser.Scene): void {
     const spriteQuery = ecs.createQuery(
         any(Sprite),
         any(Input),
-        any(PlayerNetTag)
+        any(PlayerNetTag),
+        not(PlayerTag)
     );
 
     spriteQuery.forEach((id) => {
@@ -19,7 +21,15 @@ export default function playerNetMovementSystem(scene: Phaser.Scene): void {
         // 		Sprite.sprite[id].body.reset(Input.x[id], Input.y[id]);
         // 	}
         // }
-        // if (Input.x[id] != 0 && Input.y[id] != 0)
-        scene.physics.moveTo(Sprite.sprite[id], Input.x[id], Input.y[id], 300);
+        // console.debug(id +" "+ Input.x[id] + " " + Input.y[id]);
+        if (Input.x[id] != 0 && Input.y[id] != 0) {
+            // console.debug(Input.x[id] + " " + Input.y[id]);
+            scene.physics.moveTo(
+                Sprite.sprite[id],
+                Input.x[id],
+                Input.y[id],
+                300
+            );
+        }
     });
 }
