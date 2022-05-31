@@ -18,7 +18,9 @@
         "vite": "^2.7.13"
     },
     "dependencies": {
+        "@types/matter-js": "^0.17.7",
         "colyseus.js": "^0.14.13",
+        "matter-js": "^0.18.0",
         "wolf-ecs": "^2.1.3"
     }
 }

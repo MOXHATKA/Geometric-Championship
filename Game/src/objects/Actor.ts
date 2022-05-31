@@ -1,5 +1,7 @@
 export default class Actor extends Phaser.Physics.Matter.Sprite {
     // declare body: this.body;
+    // declare body: MatterJS.BodyType;
+
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene.matter.world, x, y, texture);
         this.setScale(2);

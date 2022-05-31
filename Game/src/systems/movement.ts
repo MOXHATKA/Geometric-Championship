@@ -29,6 +29,6 @@ export default function movementSystem(scene: Phaser.Scene): void {
 			// scene.physics.moveTo(sprite, Input.x[id], Input.y[id], 300)
 			// scene.matter.body.applyForce(sprite);
 			sprite.setVelocity(Math.round(vect.x * 5), Math.round(vect.y * 5));
-		console.log(vect);
+		// console.log(vect);
 	})
 }
